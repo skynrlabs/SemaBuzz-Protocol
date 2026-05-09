@@ -1,5 +1,9 @@
 # SemaBuzz Protocol
 
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
+[![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
+[![Contributions: Read Only](https://img.shields.io/badge/Contributions-Read_Only-red.svg)](CONTRIBUTING.md)
+
 The **SemaBuzz Protocol** is a self-contained, pure .NET 9 library that implements a robust peer-to-peer encrypted communication wire. It serves as the core networking, cryptographic, and state management engine for any application.
 
 ## Features
