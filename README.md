@@ -23,18 +23,18 @@ The **SemaBuzz Protocol** is a self-contained, pure .NET 9 library that implemen
 Before building with SemaBuzz Protocol, it's helpful to understand two core concepts:
 
 ### 1. The Handshake Lifecycle
-Connections progress through distinct states explicitly tracked by the protocol (SemaBuzzWireState):
-- \Cold\: Network initialized, ready to dial.
-- \Warming\: Contacting the peer or negotiating over the relay. STUN and UDP hole-punching happen concurrently here.
-- \Secured\: ECDH P-256 key exchange has finished, AES-256-GCM context is established, and encrypted streaming can begin.
-- \Dead\: The connection closed or timed out.
+Connections progress through distinct states explicitly tracked by the protocol (`SemaBuzzWireState`):
+- `Cold`: Network initialized, ready to dial.
+- `Warming`: Contacting the peer or negotiating over the relay. STUN and UDP hole-punching happen concurrently here.
+- `Secured`: ECDH P-256 key exchange has finished, AES-256-GCM context is established, and encrypted streaming can begin.
+- `Dead`: The connection closed or timed out.
 
 ### 2. Live-Typing "Intensity"
-SemaBuzz does not send whole messages or "user is typing..." indicators. Instead, it streams keystrokes live, one at a time. The \SemaBuzzStreamer\ calculates the velocity of keystrokes locally and attaches an \Intensity\ property (0-255) to every packet on the wire. This allows UI applications to render a tactile "filament" or vibrating response purely based on how fast the end user is typing.
+SemaBuzz does not send whole messages or "user is typing..." indicators. Instead, it streams keystrokes live, one at a time. The `SemaBuzzStreamer` calculates the velocity of keystrokes locally and attaches an `Intensity` property (0-255) to every packet on the wire. This allows UI applications to render a tactile "filament" or vibrating response purely based on how fast the end user is typing.
 
 ## ⚡ Quick Start
 
-SemaBuzz provides two primary classes: \SemaBuzzListener\ (Host) and \SemaBuzzClient\ (Dialer). Below is a minimal example using a WebSocket Relay fallback to establish a secured connection between two peers.
+SemaBuzz provides two primary classes: `SemaBuzzListener` (Host) and `SemaBuzzClient` (Dialer). Below is a minimal example using a local WebSocket Relay to establish a secured connection between two peers.
 
 ### 1. The Host (Listener)
 ```csharp
@@ -100,7 +100,7 @@ dotnet build
 dotnet test
 ```
 
-> **Tip:** You can run the `examples/SemaBuzz.ConsoleDemo` project out-of-the-box to test passing live text locally!
+> **Tip:** You can run the `examples/SemaBuzz.ConsoleDemo` project out-of-the-box to test passing live text locally! To do this, you will need to clone and run the companion [SemaBuzz Relay](https://github.com/skynrlabs/SemaBuzz-Relay) server locally on port 7171 to act as the matchmaking WebSocket server.
 
 ## 🤝 Contributing
 
