@@ -37,7 +37,7 @@ SemaBuzz does not send whole messages or "user is typing..." indicators. Instead
 SemaBuzz provides two primary classes: \SemaBuzzListener\ (Host) and \SemaBuzzClient\ (Dialer). Below is a minimal example using a WebSocket Relay fallback to establish a secured connection between two peers.
 
 ### 1. The Host (Listener)
-`csharp
+```csharp
 using var listener = new SemaBuzzListener();
 
 // Auto-accept all incoming connection requests
@@ -47,22 +47,22 @@ listener.ConnectionApprovalCallback = (peer) => Task.FromResult(true);
 listener.PacketReceived += (s, e) => Console.Write(e.Packet.Character);
 
 // Start listening passively in a relay room "HELLO"
-_ = listener.ListenViaRelayAsync("wss://your-relay-host/relay", "HELLO");
-`
+_ = listener.ListenViaRelayAsync("ws://localhost:7171/relay", "HELLO");
+```
 
 ### 2. The Client (Dialer)
-`csharp
+```csharp
 using var client = new SemaBuzzClient();
 
 // Connect out to the room "HELLO"
-_ = client.ConnectViaRelayAsync("wss://your-relay-host/relay", "HELLO");
+_ = client.ConnectViaRelayAsync("ws://localhost:7171/relay", "HELLO");
 
 // Wait for state to become Secured (event: WireStateChanged)
-`
+```
 
 ### 3. Send Data (Both)
-Both the Host and Client can send data symmetrically once the connection is \Secured\:
-`csharp
+Both the Host and Client can send data symmetrically once the connection is `Secured`:
+```csharp
 var streamer = new SemaBuzzStreamer();
 
 // Every keystroke generates an encrypted packet on the wire
@@ -78,7 +78,7 @@ streamer.PacketReady += async (s, e) =>
 streamer.Feed('h');
 streamer.Feed('e');
 streamer.Feed('l');
-`
+```
 
 ## 🏗️ Architecture
 
