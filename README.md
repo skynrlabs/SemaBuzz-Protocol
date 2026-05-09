@@ -1,6 +1,6 @@
 # SemaBuzz Protocol
 
-The **SemaBuzz Protocol** is a self-contained, pure .NET 9 library that implements a robust peer-to-peer encrypted communication wire. It serves as the core networking, cryptographic, and state management engine for SemaBuzz applications.
+The **SemaBuzz Protocol** is a self-contained, pure .NET 9 library that implements a robust peer-to-peer encrypted communication wire. It serves as the core networking, cryptographic, and state management engine for any application.
 
 ## Features
 
