@@ -86,21 +86,21 @@ The protocol is designed as a standalone wrapper over base .NET networking/crypt
 
 ### 🔑 Key Classes
 
-- SemaBuzzClient / SemaBuzzListener: Outbound and inbound entry points.
-- SemaBuzzShield: Handles ECDH key generation, shared secret derivation (HKDF-SHA256), and per-packet AES encryption.
-- SemaBuzzStreamer: The typing engine that converts text inputs into variable-intensity stream packets.
-- SemaBuzzPunchThrough: Orchestrates NAT hole-punch probes to build direct UDP connections.
+- `SemaBuzzClient` / `SemaBuzzListener`: Outbound and inbound entry points.
+- `SemaBuzzShield`: Handles ECDH key generation, shared secret derivation (HKDF-SHA256), and per-packet AES encryption.
+- `SemaBuzzStreamer`: The typing engine that converts text inputs into variable-intensity stream packets.
+- `SemaBuzzPunchThrough`: Orchestrates NAT hole-punch probes to build direct UDP connections.
 
 ## 🚀 Building Locally
 
-`ash
+```bash
 git clone https://github.com/skynrlabs/SemaBuzz-Protocol.git
 cd SemaBuzz-Protocol
 dotnet build
 dotnet test
-`
+```
 
-> **Tip:** You can run the examples/SemaBuzz.ConsoleDemo project out-of-the-box to test passing live text locally!
+> **Tip:** You can run the `examples/SemaBuzz.ConsoleDemo` project out-of-the-box to test passing live text locally!
 
 ## 🤝 Contributing
 
