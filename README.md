@@ -46,16 +46,16 @@ listener.ConnectionApprovalCallback = (peer) => Task.FromResult(true);
 // Bind to event before listening
 listener.PacketReceived += (s, e) => Console.Write(e.Packet.Character);
 
-// Start listening passively in a relay room "HELLOW"
-_ = listener.ListenViaRelayAsync("wss://your-relay-host/relay", "HELLOW");
+// Start listening passively in a relay room "HELLO"
+_ = listener.ListenViaRelayAsync("wss://your-relay-host/relay", "HELLO");
 `
 
 ### 2. The Client (Dialer)
 `csharp
 using var client = new SemaBuzzClient();
 
-// Connect out to the room "HELLOW"
-_ = client.ConnectViaRelayAsync("wss://your-relay-host/relay", "HELLOW");
+// Connect out to the room "HELLO"
+_ = client.ConnectViaRelayAsync("wss://your-relay-host/relay", "HELLO");
 
 // Wait for state to become Secured (event: WireStateChanged)
 `
