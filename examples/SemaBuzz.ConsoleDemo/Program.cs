@@ -9,11 +9,11 @@ namespace SemaBuzz.ConsoleDemo
         static async Task Main(string[] args)
         {
             Console.WriteLine("=== SemaBuzz Protocol Demo ===");
-            Console.WriteLine("This demo uses a public relay for easy local testing.");
+            Console.WriteLine("This demo uses a local relay for testing.");
             
-            // For testing, you'd typically run your own local relay (e.g. ws://localhost:7171/relay)
+            // For testing, you'd typically run your own local relay
             // from the open-source SemaBuzz Relay project.
-            string relayUri = "wss://relay.semabuzz.me/relay";
+            string relayUri = "ws://localhost:7171/relay";
             string token = "DEMO99";
 
             Console.WriteLine("Press 'H' to Host, or 'C' to Connect as Client:");
