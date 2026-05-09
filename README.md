@@ -40,7 +40,7 @@ dotnet test
 
 ## 🤝 Contributing
 
-We welcome contributions to the SemaBuzz Protocol engine! Before submitting a pull request, please review our [Contributing Guidelines](CONTRIBUTING.md).
+Since this is a read-only release, we are **not** accepting upstream contributions (Issues or Pull Requests) at this time. However, you are completely free to fork the project and build upon it under the terms of the AGPL v3.0 license. Please review our [Contributing Guidelines](CONTRIBUTING.md).
 
 ## ⚖️ License
 
