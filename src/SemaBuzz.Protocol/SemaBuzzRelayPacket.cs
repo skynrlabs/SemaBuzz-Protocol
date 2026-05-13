@@ -26,11 +26,11 @@ public static class SemaBuzzRelayPacket
     public const int PunchPacketSize = 16;   // standard 10-byte header + 4-byte IPv4 + 2-byte port
 
     // Relay server connection details.
-    // DefaultRelayUri is empty — there is no hosted SemaBuzz relay.
+    // DefaultRelayUri points to a local relay instance.
     // Users must deploy their own relay (https://github.com/skynrlabs/SemaBuzz-Relay)
     // and configure the URI in their application or settings.
-    public const string DefaultRelayUri  = "";
-    public const string DefaultRelayHost = ""; // kept for compatibility
+    public const string DefaultRelayUri  = "ws://localhost:5000/relay";
+    public const string DefaultRelayHost = "localhost"; // kept for compatibility
 
     public static bool IsRelayPacket(byte[] data) =>
         data.Length >= Size &&
