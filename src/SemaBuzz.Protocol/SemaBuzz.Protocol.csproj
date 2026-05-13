@@ -4,6 +4,24 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- NuGet package metadata -->
+    <PackageId>SemaBuzz.Protocol</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>Skynr Labs</Authors>
+    <Company>Skynr Labs</Company>
+    <Description>Core networking, cryptography, and state management engine for SemaBuzz peer-to-peer encrypted communication.</Description>
+    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/skynrlabs/SemaBuzz-Protocol</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/skynrlabs/SemaBuzz-Protocol</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>semabuzz;p2p;encryption;messaging;protocol</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
