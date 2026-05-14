@@ -2,7 +2,7 @@
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
-[![Contributions: Read Only](https://img.shields.io/badge/Contributions-Read_Only-red.svg)](CONTRIBUTING.md)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Encrypted. Direct. Alive.**  
 > A pure .NET 9 library that gives your app a real-time, end-to-end encrypted communication wire — complete with live keystroke streaming, NAT hole-punching, file transfers, and a shared whiteboard. No servers required beyond a lightweight relay for matchmaking.
@@ -121,7 +121,7 @@ Then fire up `examples/SemaBuzz.ConsoleDemo` to see live keystroke streaming in 
 
 ## 🤝 Contributing
 
-This is currently a read-only release — we're not taking PRs or issues upstream yet. That said, it's AGPL-3.0, so fork away and build something cool. Check [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for the branch model, coding standards, and PR process.
 
 ## ⚖️ License
 
