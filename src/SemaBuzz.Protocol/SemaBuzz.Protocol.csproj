@@ -7,7 +7,7 @@
 
     <!-- NuGet package metadata -->
     <PackageId>SemaBuzz.Protocol</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Skynr Labs</Authors>
     <Company>Skynr Labs</Company>
     <Description>Core networking, cryptography, and state management engine for SemaBuzz peer-to-peer encrypted communication.</Description>
