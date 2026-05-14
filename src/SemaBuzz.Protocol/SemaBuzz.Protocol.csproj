@@ -11,7 +11,7 @@
     <Authors>Skynr Labs</Authors>
     <Company>Skynr Labs</Company>
     <Description>Core networking, cryptography, and state management engine for SemaBuzz peer-to-peer encrypted communication.</Description>
-    <PackageLicenseExpression>AGPL-3.0-only</PackageLicenseExpression>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageProjectUrl>https://github.com/skynrlabs/SemaBuzz-Protocol</PackageProjectUrl>
     <RepositoryUrl>https://github.com/skynrlabs/SemaBuzz-Protocol</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

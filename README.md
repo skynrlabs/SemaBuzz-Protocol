@@ -34,6 +34,18 @@ Every connection moves through four states (`SemaBuzzWireState`):
 ### 2. Intensity — not "user is typing…"
 SemaBuzz doesn't send typing indicators. It streams every individual keystroke. The `SemaBuzzStreamer` measures the velocity of each keypress and stamps an `Intensity` byte (0–255) onto the wire packet. Your UI can use that number to drive a glowing filament, a vibrating bar, or anything else — purely from how fast the other person is hammering their keyboard.
 
+## 📦 Install
+
+```
+dotnet add package SemaBuzz.Protocol
+```
+
+or via the NuGet Package Manager:
+
+```
+Install-Package SemaBuzz.Protocol
+```
+
 ## ⚡ Quick start
 
 Two classes. One connection. Let's go.
