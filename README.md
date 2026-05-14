@@ -1,6 +1,6 @@
 ﻿# SemaBuzz Protocol
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE) [![License: Commercial](https://img.shields.io/badge/License-Commercial-yellow.svg)](COMMERCIAL-LICENSE)
+[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
 [![Contributions: Read Only](https://img.shields.io/badge/Contributions-Read_Only-red.svg)](CONTRIBUTING.md)
 
@@ -108,7 +108,4 @@ Since this is a read-only release, we are **not** accepting upstream contributio
 
 ## ⚖️ License
 
-**SemaBuzz Protocol** is dual-licensed:
-
-- **Open Source (AGPL v3.0):** Free to use, modify, and distribute under the terms of the [GNU AGPL v3.0](LICENSE). Any application or service that uses this library must also be open-sourced under the same license.
-- **Commercial License:** If you want to use SemaBuzz Protocol in a proprietary or closed-source product without the AGPL's source-disclosure requirements, a commercial license is available. See [COMMERCIAL-LICENSE](COMMERCIAL-LICENSE) for terms or contact [Skynr Labs](https://github.com/skynrlabs) to inquire.
+**SemaBuzz Protocol** is licensed under the [GNU Affero General Public License v3.0](LICENSE). You are free to use, modify, and distribute it under those terms. Any application or service that uses this library must also be released under the AGPL-3.0.
