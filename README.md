@@ -1,42 +1,46 @@
-﻿# SemaBuzz Protocol
+﻿# ⚡ SemaBuzz Protocol
 
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
 [![Contributions: Read Only](https://img.shields.io/badge/Contributions-Read_Only-red.svg)](CONTRIBUTING.md)
 
-The **SemaBuzz Protocol** is a self-contained, pure .NET 9 library that implements a robust peer-to-peer encrypted communication wire. It serves as the core networking, cryptographic, and state management engine for any application.
+> **Encrypted. Direct. Alive.**  
+> A pure .NET 9 library that gives your app a real-time, end-to-end encrypted communication wire — complete with live keystroke streaming, NAT hole-punching, file transfers, and a shared whiteboard. No servers required beyond a lightweight relay for matchmaking.
 
-## ✨ Features
+## ✨ What it does
 
-- 🔒 **End-to-End Encryption:** Every session generates ephemeral keys using ECDH P-256 key exchange, with all payloads authenticated and encrypted via AES-256-GCM. 
-- ⚡ **True Peer-to-Peer:** Built-in STUN discovery (RFC 5389) and concurrent UDP hole-punching to establish lowest-latency direct connections even behind restrictive NATs.
-- ⌨️ **Live-Typing Streaming:** Transmits individual keystrokes along with calculated "intensity" (typing velocity) to provide dynamic, tactile visual feedback without needing discrete message bubbles.
-- 🛜 **Relay Fallback:** Seamlessly graceful fallback to WebSocket-based blind relays when direct UDP connections are impossible.
-- 📦 **Rich Data Sync:** First-class protocol support for:
-  - 🎨 Real-time whiteboard drawing and stroke syncing (SemaBuzzDraw)
-  - 📁 File transfers up to 10MB (SHA-256 verified)
-  - 👤 Profile metadata exchange (handles, avatar PNGs, statuses)
-  - 🔗 URL "card" pushing
+- 🔒 **End-to-end encryption** — ephemeral ECDH P-256 key exchange + AES-256-GCM on every packet. The relay never sees plaintext. Ever.
+- ⚡ **Goes direct when it can** — built-in STUN (RFC 5389) + concurrent UDP hole-punching punches through most NATs for the lowest possible latency.
+- ⌨️ **Streams keystrokes, not messages** — characters fly across the wire one at a time with a calculated typing *intensity* (0–255), so the other side can render a live, tactile response as you type.
+- 🛜 **Relay fallback** — when UDP is completely blocked, the connection falls back gracefully to WebSocket relay mode. Transparent to your app.
+- 📦 **Rich data sync out of the box:**
+  - 🎨 Real-time whiteboard strokes (SemaBuzzDraw)
+  - 📁 File transfers up to 10 MB (SHA-256 verified on receipt)
+  - 👤 Profile metadata — handles, avatars, statuses
+  - 🔗 URL card pushing
 
-## 📖 Core Concepts
+## 📖 Two things worth knowing first
 
-Before building with SemaBuzz Protocol, it's helpful to understand two core concepts:
+### 1. The connection lifecycle
+Every connection moves through four states (`SemaBuzzWireState`):
 
-### 1. The Handshake Lifecycle
-Connections progress through distinct states explicitly tracked by the protocol (`SemaBuzzWireState`):
-- `Cold`: Network initialized, ready to dial.
-- `Warming`: Contacting the peer or negotiating over the relay. STUN and UDP hole-punching happen concurrently here.
-- `Secured`: ECDH P-256 key exchange has finished, AES-256-GCM context is established, and encrypted streaming can begin.
-- `Dead`: The connection closed or timed out.
+| State | What's happening |
+|---|---|
+| `Cold` | Initialized, ready to dial |
+| `Warming` | STUN + hole-punch probes flying, relay negotiation in progress |
+| `Secured` | Keys exchanged, AES context live — encrypted streaming begins |
+| `Dead` | Connection closed or timed out |
 
-### 2. Live-Typing "Intensity"
-SemaBuzz does not send whole messages or "user is typing..." indicators. Instead, it streams keystrokes live, one at a time. The `SemaBuzzStreamer` calculates the velocity of keystrokes locally and attaches an `Intensity` property (0-255) to every packet on the wire. This allows UI applications to render a tactile "filament" or vibrating response purely based on how fast the end user is typing.
+### 2. Intensity — not "user is typing…"
+SemaBuzz doesn't send typing indicators. It streams every individual keystroke. The `SemaBuzzStreamer` measures the velocity of each keypress and stamps an `Intensity` byte (0–255) onto the wire packet. Your UI can use that number to drive a glowing filament, a vibrating bar, or anything else — purely from how fast the other person is hammering their keyboard.
 
-## ⚡ Quick Start
+## ⚡ Quick start
 
-SemaBuzz provides two primary classes: `SemaBuzzListener` (Host) and `SemaBuzzClient` (Dialer). Below is a minimal example using a local WebSocket Relay to establish a secured connection between two peers.
+Two classes. One connection. Let's go.
 
-### 1. The Host (Listener)
+> You'll need a relay running locally first — grab [SemaBuzz Relay](https://github.com/skynrlabs/SemaBuzz-Relay) and run it on port 7171.
+
+### The Host (waits for someone to join)
 ```csharp
 using var listener = new SemaBuzzListener();
 
@@ -50,7 +54,7 @@ listener.PacketReceived += (s, e) => Console.Write(e.Packet.Character);
 _ = listener.ListenViaRelayAsync("ws://localhost:7171/relay", "HELLO");
 ```
 
-### 2. The Client (Dialer)
+### The Client (dials in)
 ```csharp
 using var client = new SemaBuzzClient();
 
@@ -60,8 +64,7 @@ _ = client.ConnectViaRelayAsync("ws://localhost:7171/relay", "HELLO");
 // Wait for state to become Secured (event: WireStateChanged)
 ```
 
-### 3. Send Data (Both)
-Both the Host and Client can send data symmetrically once the connection is `Secured`:
+### Send data (works on both sides once `Secured`)
 ```csharp
 var streamer = new SemaBuzzStreamer();
 
@@ -82,16 +85,18 @@ streamer.Feed('l');
 
 ## 🏗️ Architecture
 
-The protocol is designed as a standalone wrapper over base .NET networking/crypto primitives. It has **zero dependencies** on UI frameworks like WPF or WinUI, making it highly portable to cross-platform environments (macOS, Linux, mobile, or headless bots).
+Zero UI dependencies. Zero framework lock-in. The library wraps base .NET networking and crypto primitives — no NuGet bloat. Drop it into WPF, MAUI, a headless bot, or a terminal app and it just works.
 
-### 🔑 Key Classes
+### Key classes
 
-- `SemaBuzzClient` / `SemaBuzzListener`: Outbound and inbound entry points.
-- `SemaBuzzShield`: Handles ECDH key generation, shared secret derivation (HKDF-SHA256), and per-packet AES encryption.
-- `SemaBuzzStreamer`: The typing engine that converts text inputs into variable-intensity stream packets.
-- `SemaBuzzPunchThrough`: Orchestrates NAT hole-punch probes to build direct UDP connections.
+| Class | Role |
+|---|---|
+| `SemaBuzzClient` / `SemaBuzzListener` | Outbound dialer and inbound listener |
+| `SemaBuzzShield` | ECDH key generation, HKDF-SHA256 derivation, per-packet AES-256-GCM |
+| `SemaBuzzStreamer` | Converts keystrokes into intensity-stamped wire packets |
+| `SemaBuzzPunchThrough` | Orchestrates concurrent UDP hole-punch probes |
 
-## 🚀 Building Locally
+## 🚀 Build it yourself
 
 ```bash
 git clone https://github.com/skynrlabs/SemaBuzz-Protocol.git
@@ -100,11 +105,11 @@ dotnet build
 dotnet test
 ```
 
-> **Tip:** You can run the `examples/SemaBuzz.ConsoleDemo` project out-of-the-box to test passing live text locally! To do this, you will need to clone and run the companion [SemaBuzz Relay](https://github.com/skynrlabs/SemaBuzz-Relay) server locally on port 7171 to act as the matchmaking WebSocket server.
+Then fire up `examples/SemaBuzz.ConsoleDemo` to see live keystroke streaming in action between two local processes.
 
 ## 🤝 Contributing
 
-Since this is a read-only release, we are **not** accepting upstream contributions (Issues or Pull Requests) at this time. However, you are completely free to fork the project and build upon it under the terms of the AGPL v3.0 license. Please review our [Contributing Guidelines](CONTRIBUTING.md).
+This is currently a read-only release — we're not taking PRs or issues upstream yet. That said, it's AGPL-3.0, so fork away and build something cool. Check [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## ⚖️ License
 
