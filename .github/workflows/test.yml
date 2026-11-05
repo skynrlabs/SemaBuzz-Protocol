@@ -1,0 +1,29 @@
+name: Build and test
+
+# Builds the library, the tests and the console demo, then runs every test (including the
+# loopback session tests) on each push and pull request.
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Build
+        run: dotnet build SemaBuzz.Protocol.sln -c Release --nologo
+
+      - name: Test
+        run: dotnet test SemaBuzz.Protocol.sln -c Release --no-build --nologo --logger "console;verbosity=normal"

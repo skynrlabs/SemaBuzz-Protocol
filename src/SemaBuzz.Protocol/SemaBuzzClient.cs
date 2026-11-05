@@ -40,6 +40,13 @@ public sealed class SemaBuzzClient : IDisposable
 
     public SemaBuzzWireState State { get; private set; } = SemaBuzzWireState.Cold;
     public SemaBuzzShield? Shield { get; private set; }
+
+    /// <summary>
+    /// The session's safety code (see <see cref="SemaBuzzSafetyCode"/>): 20 digits made from both
+    /// peers' public keys. Show it to the user once the wire is Secured; if it matches what the other
+    /// person sees, nobody is in the middle. Null until the keys have been exchanged.
+    /// </summary>
+    public string? SafetyCode { get; private set; }
     public bool IsRelayMode => _wsSend != null;
 
     private volatile bool _waitingForApproval;
@@ -297,6 +304,8 @@ public sealed class SemaBuzzClient : IDisposable
                     peerEcdh.ImportSubjectPublicKeyInfo(peerPub, out _);
                     var raw = localEcdh.DeriveRawSecretAgreement(peerEcdh.PublicKey);
                     Shield = SemaBuzzShield.FromEcdhSecret(raw);
+                    SafetyCode = SemaBuzzSafetyCode.Compute(
+                        localEcdh.PublicKey.ExportSubjectPublicKeyInfo(), peerPub);
                     continue;
                 }
 
@@ -504,6 +513,8 @@ public sealed class SemaBuzzClient : IDisposable
                     peerEcdh.ImportSubjectPublicKeyInfo(peerPubKeyBytes, out _);
                     var rawSecret = localEcdh.DeriveRawSecretAgreement(peerEcdh.PublicKey);
                     Shield = SemaBuzzShield.FromEcdhSecret(rawSecret);
+                    SafetyCode = SemaBuzzSafetyCode.Compute(
+                        localEcdh.PublicKey.ExportSubjectPublicKeyInfo(), peerPubKeyBytes);
                     continue;
                 }
 
