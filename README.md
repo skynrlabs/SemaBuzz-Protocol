@@ -3,7 +3,7 @@
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](LICENSE)
 [![.NET 9.0](https://img.shields.io/badge/.NET-9.0-512BD4.svg)](https://dotnet.microsoft.com/)
 [![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?logo=discord&logoColor=white)](https://discord.gg/rJMQ2cfN)
+[![Discord](https://img.shields.io/badge/Discord-Join%20Community-5865F2?logo=discord&logoColor=white)](https://discord.gg/8ysPWFdPW)
 
 > **Encrypted. Direct. Alive.**  
 > A pure .NET 9 library that gives your app a real-time, end-to-end encrypted communication wire — complete with live keystroke streaming, NAT hole-punching, file transfers, and a shared whiteboard. No servers required beyond a lightweight relay for matchmaking.
@@ -141,7 +141,7 @@ Then fire up `examples/SemaBuzz.ConsoleDemo` to see live keystroke streaming in 
 
 ## 💬 Community
 
-Join the [SemaBuzz Discord](https://discord.gg/rJMQ2cfN) to ask questions, share what you're building, and follow development.
+Join the [SemaBuzz Discord](https://discord.gg/8ysPWFdPW) to ask questions, share what you're building, and follow development.
 
 ## 🤝 Contributing
 
