@@ -10,7 +10,7 @@
 
 ## ✨ What it does
 
-- 🔒 **End-to-end encryption** — ephemeral ECDH P-256 key exchange + AES-256-GCM on every packet. The relay never sees plaintext. Ever.
+- 🔒 **End-to-end encryption** — ephemeral ECDH P-256 key exchange + AES-256-GCM on every packet. An honest relay never sees plaintext, and a **safety code** lets both people confirm nobody swapped the keys in between.
 - ⚡ **Goes direct when it can** — built-in STUN (RFC 5389) + concurrent UDP hole-punching punches through most NATs for the lowest possible latency.
 - ⌨️ **Streams keystrokes, not messages** — characters fly across the wire one at a time with a calculated typing *intensity* (0–255), so the other side can render a live, tactile response as you type.
 - 🛜 **Relay fallback** — when UDP is completely blocked, the connection falls back gracefully to WebSocket relay mode. Transparent to your app.
@@ -96,6 +96,24 @@ streamer.Feed('e');
 streamer.Feed('l');
 ```
 
+### Verify the connection (safety code)
+
+Every session has a 20-digit **safety code** made from both peers' public keys. Show it to the user
+once the wire is `Secured`; the two people compare it out loud, on a call or in person. If the codes
+match, each side has the other's real key and nobody is in the middle. If they differ, the relay or
+someone on the network swapped the keys, so end the session.
+
+```csharp
+client.WireStateChanged += (s, e) =>
+{
+    if (e.State == SemaBuzzWireState.Secured)
+        Console.WriteLine($"Safety code: {client.SafetyCode}");   // e.g. "48213 93750 21661 08427"
+};
+```
+
+`SemaBuzzListener.SafetyCode` gives the host the same code. `SemaBuzzSafetyCode.Matches(a, b)`
+compares two codes, ignoring spaces.
+
 ## 🏗️ Architecture
 
 Zero UI dependencies. Zero framework lock-in. The library wraps base .NET networking and crypto primitives — no NuGet bloat. Drop it into WPF, MAUI, a headless bot, or a terminal app and it just works.
@@ -106,6 +124,7 @@ Zero UI dependencies. Zero framework lock-in. The library wraps base .NET networ
 |---|---|
 | `SemaBuzzClient` / `SemaBuzzListener` | Outbound dialer and inbound listener |
 | `SemaBuzzShield` | ECDH key generation, HKDF-SHA256 derivation, per-packet AES-256-GCM |
+| `SemaBuzzSafetyCode` | The 20-digit code both people compare to rule out a man in the middle |
 | `SemaBuzzStreamer` | Converts keystrokes into intensity-stamped wire packets |
 | `SemaBuzzPunchThrough` | Orchestrates concurrent UDP hole-punch probes |
 

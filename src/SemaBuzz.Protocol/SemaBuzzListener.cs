@@ -53,6 +53,13 @@ public sealed class SemaBuzzListener : IDisposable
     public IPEndPoint? PeerEndPoint { get; private set; }
 
     public SemaBuzzShield? Shield { get; private set; }
+
+    /// <summary>
+    /// The session's safety code (see <see cref="SemaBuzzSafetyCode"/>): 20 digits made from both
+    /// peers' public keys. Show it to the user once the wire is Secured; if it matches what the other
+    /// person sees, nobody is in the middle. Null until the keys have been exchanged.
+    /// </summary>
+    public string? SafetyCode { get; private set; }
     public bool IsRelayMode => _isRelayMode;
 
     /// <summary>
@@ -393,6 +400,7 @@ public sealed class SemaBuzzListener : IDisposable
             peerEcdh.ImportSubjectPublicKeyInfo(peerPubKeyBytes, out _);
             var rawSecret = localEcdh.DeriveRawSecretAgreement(peerEcdh.PublicKey);
             Shield = SemaBuzzShield.FromEcdhSecret(rawSecret);
+            SafetyCode = SemaBuzzSafetyCode.Compute(localPubKeyBytes, peerPubKeyBytes);
 
             if (_pendingEcdh != null)
             {
@@ -452,6 +460,7 @@ public sealed class SemaBuzzListener : IDisposable
                     await SendEncryptedControlToAsync(SemaBuzzPacketType.ConnectRejected, result.RemoteEndPoint);
                     PeerEndPoint = null;
                     Shield = null;
+                    SafetyCode = null;
                     if (_isRelayMode)
                     {
                         _pendingDeadMessage = "connection declined";
@@ -586,6 +595,7 @@ public sealed class SemaBuzzListener : IDisposable
                     // Peer walked away.
                     PeerEndPoint = null;
                     Shield = null;
+                    SafetyCode = null;
                     _localPubKeyBytes = null;
                     if (_isRelayMode)
                     {
@@ -676,6 +686,7 @@ public sealed class SemaBuzzListener : IDisposable
             try { await _wsClient.CloseAsync(WebSocketCloseStatus.NormalClosure, "Disconnect", default); } catch { }
         PeerEndPoint = null;
         Shield = null;
+        SafetyCode = null;
         _localPubKeyBytes = null;
     }
 
